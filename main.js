@@ -85,7 +85,7 @@ loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  
+
   // Simple validation (in a real app, you'd verify against a backend)
   if (email && password) {
     currentUser = { email, name: email.split('@')[0] };
@@ -100,7 +100,7 @@ registerForm.addEventListener("submit", (e) => {
   const name = document.getElementById("regName").value;
   const email = document.getElementById("regEmail").value;
   const password = document.getElementById("regPassword").value;
-  
+
   if (name && email && password) {
     currentUser = { email, name };
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
@@ -201,7 +201,7 @@ function addUI(data) {
         loginModal.classList.remove("hidden");
         return;
       }
-      
+
       const productId = e.currentTarget.getAttribute('data-id');
       if (likes.includes(productId)) {
         likes = likes.filter(id => id !== productId);
@@ -231,25 +231,25 @@ function addUI(data) {
     btn.addEventListener('click', (e) => {
       const product = data.find(item => item.id === e.target.id);
       const existingItem = shop.find(item => item.id === product.id);
-      
+
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
         product.quantity = 1;
         shop.push(product);
       }
-      
+
       localStorage.setItem("shop", JSON.stringify(shop));
       updateCartCount();
       addUiShop(shop);
       updateCartTotal();
-      
+
       // Show notification
       const notification = document.createElement('div');
       notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
       notification.textContent = `${product.title} savatga qo'shildi!`;
       document.body.appendChild(notification);
-      
+
       setTimeout(() => {
         notification.remove();
       }, 3000);
@@ -263,7 +263,7 @@ function addUiShop(data) {
     shop_cart.innerHTML = '<p class="text-center text-gray-500 py-8">Savatda mahsulot yoʻq</p>';
     return;
   }
-  
+
   data.forEach((value) => {
     let div = document.createElement("div");
     div.className = "border rounded-lg p-4 bg-white";
@@ -328,7 +328,7 @@ function addUiShop(data) {
       updateCartTotal();
     });
   });
-  
+
   updateCartTotal();
 }
 

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: 'rgb(127, 77, 255)',
+            secondary: '#FFB54C',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white modal">
+      <div class="mt-3">
+        <div class="flex justify-between items-center pb-3">
+          <h3 class="text-xl font-bold text-gray-900">Login</h3>
+          <button id="closeLoginModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input type="email" id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+              required>
+          </div>
+          <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input type="password" id="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+              required>
+          </div>
+          <button type="submit"
+            class="w-full text-white bg-primary hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg px-5 py-2.5 text-center">Login</button>
+          <p class="text-sm text-center">Don't have an account? <a href="#" id="showRegister"
+              class="text-primary hover:underline">Register</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white modal">
+      <div class="mt-3">
+        <div class="flex justify-between items-center pb-3">
+          <h3 class="text-xl font-bold text-gray-900">Register</h3>
+          <button id="closeRegisterModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="registerForm" class="space-y-4">
+          <div>
+            <label for="regName" class="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
+            <input type="text" id="regName"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+              required>
+          </div>
+          <div>
+            <label for="regEmail" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input type="email" id="regEmail"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+              required>
+          </div>
+          <div>
+            <label for="regPassword" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input type="password" id="regPassword"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+              required>
+          </div>
+          <button type="submit"
+            class="w-full text-white bg-primary hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg px-5 py-2.5 text-center">Register</button>
+          <p class="text-sm text-center">Already have an account? <a href="#" id="showLogin"
+              class="text-primary hover:underline">Login</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="w-[90%] m-auto flex items-center justify-between border-b py-4 border-gray-400">
+    <h1 class="text-2xl font-bold text-primary">Logo Online Shop</h1>
+    <div class="flex items-center justify-between gap-5">
+      <h3 class="cursor-pointer hover:text-primary">Elektronika</h3>
+      <h3 class="cursor-pointer hover:text-primary">Uy jihozlari</h3>
+      <h3 class="cursor-pointer hover:text-primary">Kiyim kechak</h3>
+      <a href="./index2.html">bosh sahifaga yuborish</a>
+      <div class="flex items-center gap-4">
+        <button id="showLoginModal" class="text-gray-700 hover:text-primary">
+          <i class="fas fa-user"></i>
+        </button>
+        <button id="wishlistBtn" class="text-gray-700 hover:text-primary relative">
+          <i class="fas fa-heart"></i>
+          <span id="wishlistCount"
+            class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+        </button>
+        <button id="cartBtn" class="text-gray-700 hover:text-primary relative">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cartCount"
+            class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="w-[90%] m-auto mt-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold">Mahsulotlar</h2>
+      <div class="flex gap-2">
+        <button id="gridView" class="p-2 rounded bg-gray-200 text-gray-700 hover:bg-primary hover:text-white">
+          <i class="fas fa-th"></i>
+        </button>
+        <button id="listView" class="p-2 rounded bg-gray-200 text-gray-700 hover:bg-primary hover:text-white">
+          <i class="fas fa-list"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="card" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"></div>
+  </main>
+
+  <!-- Shopping Cart Sidebar -->
+  <div id="cartSidebar"
+    class="fixed top-0 right-0 h-full w-96 bg-white shadow-lg transform transition-transform duration-300 translate-x-full z-40 overflow-y-auto">
+    <div class="p-5">
+      <div class="flex justify-between items-center border-b pb-4">
+        <h2 class="text-xl font-bold">Savat</h2>
+        <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div id="shop_cart" class="py-4 space-y-4"></div>
+
+      <div class="border-t pt-4 mt-4">
+        <div class="flex justify-between mb-2">
+          <span>Jami:</span>
+          <span id="cartTotal">0 so'm</span>
+        </div>
+        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-purple-800">Buyurtma berish</button>
+      </div>
+    </div>
+  </div>
+  <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30"></div>
+
+  <script>
+    // API and state management
+    const API = "https://68a6b3c3639c6a54e99f8b80.mockapi.io/dustim/market1";
+    let card = document.getElementById("card");
+    let shop_cart = document.getElementById("shop_cart");
+    let shop = JSON.parse(localStorage.getItem("shop")) || [];
+    let likes = JSON.parse(localStorage.getItem("likes")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+    // DOM Elements
+    const cartBtn = document.getElementById("cartBtn");
+    const closeCart = document.getElementById("closeCart");
+    const cartSidebar = document.getElementById("cartSidebar");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+    const wishlistCount = document.getElementById("wishlistCount");
+    const wishlistBtn = document.getElementById("wishlistBtn");
+    const gridView = document.getElementById("gridView");
+    const listView = document.getElementById("listView");
+    const loginModal = document.getElementById("loginModal");
+    const registerModal = document.getElementById("registerModal");
+    const closeLoginModal = document.getElementById("closeLoginModal");
+    const closeRegisterModal = document.getElementById("closeRegisterModal");
+    const showRegister = document.getElementById("showRegister");
+    const showLogin = document.getElementById("showLogin");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const showLoginModal = document.getElementById("showLoginModal");
+
+    // Initialize
+    updateCartCount();
+    updateWishlistCount();
+
+    // Event Listeners
+    cartBtn.addEventListener("click", () => {
+      cartSidebar.classList.remove("translate-x-full");
+      cartOverlay.classList.remove("hidden");
+    });
+
+    closeCart.addEventListener("click", () => {
+      cartSidebar.classList.add("translate-x-full");
+      cartOverlay.classList.add("hidden");
+    });
+
+    cartOverlay.addEventListener("click", () => {
+      cartSidebar.classList.add("translate-x-full");
+      cartOverlay.classList.add("hidden");
+    });
+
+    gridView.addEventListener("click", () => {
+      card.classList.remove("grid-cols-1");
+      card.classList.add("grid-cols-1", "sm:grid-cols-2", "md:grid-cols-3", "lg:grid-cols-4", "xl:grid-cols-5");
+    });
+
+    listView.addEventListener("click", () => {
+      card.classList.remove("sm:grid-cols-2", "md:grid-cols-3", "lg:grid-cols-4", "xl:grid-cols-5");
+      card.classList.add("grid-cols-1");
+    });
+
+    showLoginModal.addEventListener("click", () => {
+      loginModal.classList.remove("hidden");
+    });
+
+    closeLoginModal.addEventListener("click", () => {
+      loginModal.classList.add("hidden");
+    });
+
+    closeRegisterModal.addEventListener("click", () => {
+      registerModal.classList.add("hidden");
+    });
+
+    showRegister.addEventListener("click", (e) => {
+      e.preventDefault();
+      loginModal.classList.add("hidden");
+      registerModal.classList.remove("hidden");
+    });
+
+    showLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      registerModal.classList.add("hidden");
+      loginModal.classList.remove("hidden");
+    });
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Simple validation (in a real app, you'd verify against a backend)
+      if (email && password) {
+        currentUser = { email, name: email.split('@')[0] };
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        loginModal.classList.add("hidden");
+        alert(`Xush kelibsiz, ${currentUser.name}!`);
+      }
+    });
+
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+
+      if (name && email && password) {
+        currentUser = { email, name };
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        registerModal.classList.add("hidden");
+        alert(`Xush kelibsiz, ${name}!`);
+      }
+    });
+
+    wishlistBtn.addEventListener("click", () => {
+      if (!currentUser) {
+        loginModal.classList.remove("hidden");
+        return;
+      }
+      alert("Sevimlilar ro'yxati ochiladi");
+      // Implement wishlist view functionality
+    });
+
+    // Functions
+    function updateCartCount() {
+      cartCount.textContent = shop.length;
+      if (shop.length > 0) {
+        cartCount.classList.remove("hidden");
+      } else {
+        cartCount.classList.add("hidden");
+      }
+    }
+
+    function updateWishlistCount() {
+      wishlistCount.textContent = likes.length;
+      if (likes.length > 0) {
+        wishlistCount.classList.remove("hidden");
+      } else {
+        wishlistCount.classList.add("hidden");
+      }
+    }
+
+    function updateCartTotal() {
+      const total = shop.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      cartTotal.textContent = total.toLocaleString() + " so'm";
+    }
+
+    const getData = async () => {
+      try {
+        const res = await fetch(API);
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.error("Ma'lumotlarni olishda xatolik:", error);
+        return [];
+      }
+    };
+
+    getData().then((res) => addUI(res));
+
+    function addUI(data) {
+      card.innerHTML = "";
+      data.forEach((element) => {
+        const isLiked = likes.includes(element.id);
+        let div = document.createElement("div");
+        div.className = "bg-white rounded-lg shadow-md overflow-hidden fade-in";
+        div.innerHTML = `
+            <div class="w-full relative">
+              <img src="${element.img}" alt="${element.title}" class="w-full h-48 object-cover" />
+              <div class="absolute top-2 right-2 flex flex-col gap-2">
+                <button class="like-btn p-1 bg-white rounded-full shadow-md ${isLiked ? 'text-red-500' : 'text-gray-500'}" data-id="${element.id}">
+                  <i class="fas fa-heart"></i>
+                </button>
+                <button class="quick-view-btn p-1 bg-white rounded-full shadow-md text-gray-500" data-id="${element.id}">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-primary text-lg font-bold">${element.price.toLocaleString()} so'm</h3>
+              <span class="bg-yellow-300 px-2 py-1 text-xs mt-2 inline-block rounded">${element.month.toLocaleString()} so'm/oyiga</span>
+              <h2 class="text-sm my-2 font-semibold">${element.title}</h2>
+              <p class="text-gray-600 text-xs">${element.description.slice(0, 50)}...</p>
+
+              <div class="flex items-center gap-1 my-2">
+                <i class="fas fa-star text-secondary"></i>
+                <p class="text-xs">${element.rate}</p>
+              </div>
+              <button
+                id="${element.id}"
+                class="shop-btn w-full h-10 rounded-xl bg-primary text-white hover:bg-purple-800 transition-colors"
+              >
+                Savatga
+              </button>
+            </div>
+          `;
+        card.append(div);
+      });
+
+      // Add event listeners to like buttons
+      document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          if (!currentUser) {
+            loginModal.classList.remove("hidden");
+            return;
+          }
+
+          const productId = e.currentTarget.getAttribute('data-id');
+          if (likes.includes(productId)) {
+            likes = likes.filter(id => id !== productId);
+            e.currentTarget.classList.remove('text-red-500');
+            e.currentTarget.classList.add('text-gray-500');
+          } else {
+            likes.push(productId);
+            e.currentTarget.classList.remove('text-gray-500');
+            e.currentTarget.classList.add('text-red-500');
+          }
+          localStorage.setItem("likes", JSON.stringify(likes));
+          updateWishlistCount();
+        });
+      });
+
+      // Add event listeners to quick view buttons
+      document.querySelectorAll('.quick-view-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const productId = e.currentTarget.getAttribute('data-id');
+          const product = data.find(item => item.id === productId);
+          alert(`${product.title}\n\nNarxi: ${product.price.toLocaleString()} so'm\n\n${product.description}`);
+        });
+      });
+
+      // Add event listeners to add to cart buttons
+      document.querySelectorAll('.shop-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const product = data.find(item => item.id === e.target.id);
+          const existingItem = shop.find(item => item.id === product.id);
+
+          if (existingItem) {
+            existingItem.quantity += 1;
+          } else {
+            product.quantity = 1;
+            shop.push(product);
+          }
+
+          localStorage.setItem("shop", JSON.stringify(shop));
+          updateCartCount();
+          addUiShop(shop);
+          updateCartTotal();
+
+          // Show notification
+          const notification = document.createElement('div');
+          notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
+          notification.textContent = `${product.title} savatga qo'shildi!`;
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.remove();
+          }, 3000);
+        });
+      });
+    }
+
+    function addUiShop(data) {
+      shop_cart.innerHTML = "";
+      if (data.length === 0) {
+        shop_cart.innerHTML = '<p class="text-center text-gray-500 py-8">Savatda mahsulot yoʻq</p>';
+        return;
+      }
+
+      data.forEach((value) => {
+        let div = document.createElement("div");
+        div.className = "border rounded-lg p-4 bg-white";
+        div.innerHTML = `
+            <div class="flex items-center justify-between gap-4">
+              <img src="${value.img}" alt="${value.title}" class="w-20 h-20 object-contain" />
+              
+              <div class="flex-1">
+                <h3 class="font-semibold text-sm">${value.title}</h3>
+                <p class="text-primary font-bold mt-1">${value.price.toLocaleString()} so'm</p>
+                
+                <div class="flex items-center mt-2">
+                  <button class="decrement-btn px-2 py-1 bg-gray-200 rounded-l" data-id="${value.id}">-</button>
+                  <span class="quantity px-3 py-1 bg-gray-100">${value.quantity}</span>
+                  <button class="increment-btn px-2 py-1 bg-gray-200 rounded-r" data-id="${value.id}">+</button>
+                  
+                  <button class="remove-btn ml-4 text-red-500 text-sm" data-id="${value.id}">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        shop_cart.append(div);
+      });
+
+      // Add event listeners to quantity buttons
+      document.querySelectorAll('.increment-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const productId = e.target.getAttribute('data-id');
+          const product = shop.find(item => item.id === productId);
+          product.quantity += 1;
+          localStorage.setItem("shop", JSON.stringify(shop));
+          addUiShop(shop);
+          updateCartTotal();
+        });
+      });
+
+      document.querySelectorAll('.decrement-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const productId = e.target.getAttribute('data-id');
+          const product = shop.find(item => item.id === productId);
+          if (product.quantity > 1) {
+            product.quantity -= 1;
+          } else {
+            shop = shop.filter(item => item.id !== productId);
+          }
+          localStorage.setItem("shop", JSON.stringify(shop));
+          addUiShop(shop);
+          updateCartCount();
+          updateCartTotal();
+        });
+      });
+
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const productId = e.target.closest('.remove-btn').getAttribute('data-id');
+          shop = shop.filter(item => item.id !== productId);
+          localStorage.setItem("shop", JSON.stringify(shop));
+          addUiShop(shop);
+          updateCartCount();
+          updateCartTotal();
+        });
+      });
+
+      updateCartTotal();
+    }
+
+    // Initialize shop view
+    addUiShop(shop);
+  </script>
+</body>
+
+</html>
