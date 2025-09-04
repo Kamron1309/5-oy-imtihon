@@ -3,453 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Asaxiy - Корзина</title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4e54c8',
+                        primaryDark: '#3a3eb6',
+                        gradientFrom: '#4e54c8',
+                        gradientTo: '#8f94fb',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        /* Header styles */
-        header {
-            background: linear-gradient(to right, #4e54c8, #8f94fb);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-        }
-        
-        .user-actions a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 14px;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-        
-        nav ul li {
-            margin-right: 25px;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        nav ul li a:hover {
-            color: #ffeb3b;
-        }
-        
-        /* Main content styles */
-        .main-content {
-            display: flex;
-            margin: 30px 0;
-            gap: 30px;
-        }
-        
-        .cart-section {
-            flex: 7;
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .cart-section h1 {
-            color: #4e54c8;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f1f1f1;
-        }
-        
-        .empty-cart {
-            text-align: center;
-            padding: 40px 0;
-        }
-        
-        .empty-cart i {
-            font-size: 80px;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-        
-        .empty-cart h2 {
-            color: #777;
-            margin-bottom: 15px;
-        }
-        
-        .empty-cart p {
-            color: #999;
-            margin-bottom: 25px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: #4e54c8;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .btn:hover {
-            background: #3a3eb6;
-        }
-        
-        .features {
-            margin-top: 40px;
-        }
-        
-        .feature {
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .feature h3 {
-            color: #4e54c8;
-            margin-bottom: 10px;
-        }
-        
-        /* Sidebar styles */
-        .sidebar {
-            flex: 3;
-        }
-        
-        .widget {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .widget h3 {
-            color: #4e54c8;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .widget ul {
-            list-style: none;
-        }
-        
-        .widget ul li {
-            margin-bottom: 10px;
-        }
-        
-        .widget ul li a {
-            color: #555;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: block;
-            padding: 5px 0;
-        }
-        
-        .widget ul li a:hover {
-            color: #4e54c8;
-            padding-left: 5px;
-        }
-        
-        .contact-info {
-            color: #555;
-            line-height: 1.8;
-        }
-        
-        .payment-methods {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .payment-method {
-            background: #f1f1f1;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: 500;
-        }
-        
-        /* Footer styles */
-        footer {
-            background: #2c2c2c;
-            color: #ddd;
-            padding: 40px 0 20px;
-            margin-top: 50px;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 30px;
-        }
-        
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-column ul li a {
-            color: #aaa;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            color: #aaa;
-            font-size: 14px;
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 992px) {
-            .main-content {
-                flex-direction: column;
-            }
-            
-            .header-top {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .user-actions {
-                margin-top: 15px;
-            }
-            
-            nav ul {
-                justify-content: center;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav ul li {
-                margin: 0 10px 10px 0;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 30px;
-            }
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 leading-relaxed">
     <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-top">
-                <div class="logo">
-                    <i class="fas fa-store"></i>
+    <header class="bg-gradient-to-r from-gradientFrom to-gradientTo text-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4 gap-4">
+                <div class="logo flex items-center text-2xl font-bold">
+                    <i class="fas fa-store mr-2"></i>
                     <span>Asaxiy</span>
                 </div>
-                <div class="user-actions">
-                    <a href="#"><i class="fas fa-user"></i> Войти</a>
-                    <a href="#"><i class="fas fa-heart"></i> Избранное</a>
-                    <a href="#"><i class="fas fa-shopping-cart"></i> Корзина</a>
+                <div class="user-actions flex gap-5">
+                    <a href="#" class="text-sm hover:text-yellow-300 transition-colors"><i class="fas fa-user mr-1"></i> Войти</a>
+                    <a href="#" class="text-sm hover:text-yellow-300 transition-colors"><i class="fas fa-heart mr-1"></i> Избранное</a>
+                    <a href="#" class="text-sm hover:text-yellow-300 transition-colors"><i class="fas fa-shopping-cart mr-1"></i> Корзина</a>
                 </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Сверх техника</a></li>
-                    <li><a href="#">0-0-6</a></li>
-                    <li><a href="#">Одежда для студентов</a></li>
-                    <li><a href="#">Телефоны</a></li>
-                    <li><a href="#">Бытовая техника</a></li>
-                    <li><a href="#">Компьютеры</a></li>
-                    <li><a href="#">Телевизоры</a></li>
-                    <li><a href="#">Ноутбуки</a></li>
+            <nav class="py-3">
+                <ul class="flex flex-wrap gap-5 justify-center md:justify-start">
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Сверх техника</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">0-0-6</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Одежда для студентов</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Телефоны</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Бытовая техника</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Компьютеры</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Телевизоры</a></li>
+                    <li><a href="#" class="font-medium hover:text-yellow-300 transition-colors">Ноутбуки</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <!-- Main Content -->
-    <div class="container main-content">
-        <!-- Cart Section -->
-        <section class="cart-section">
-            <h1>Корзина</h1>
-            <div class="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <h2>В вашей корзине пока нет товаров</h2>
-                <p>Начните с основ или найдите продукт с помощью функции поиска.</p>
-                <a href="#" class="btn">Главное меню</a>
-            </div>
+    <div class="container mx-auto px-4 my-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Cart Section -->
+            <section class="w-full lg:w-7/12 bg-white rounded-xl shadow-sm p-6">
+                <h1 class="text-primary text-2xl font-semibold mb-5 pb-4 border-b border-gray-200">Корзина</h1>
+                <div class="empty-cart text-center py-10">
+                    <i class="fas fa-shopping-cart text-gray-300 text-6xl mb-5"></i>
+                    <h2 class="text-gray-600 text-xl mb-4">В вашей корзине пока нет товаров</h2>
+                    <p class="text-gray-500 mb-6 max-w-md mx-auto">Начните с основ или найдите продукт с помощью функции поиска.</p>
+                    <a href="#" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primaryDark transition-colors inline-block">Главное меню</a>
+                </div>
 
-            <div class="features">
-                <div class="feature">
-                    <h3>Больше не нужно ходить на базар</h3>
-                    <p>У нас выгодные цены и доставка до дома</p>
+                <div class="features mt-10">
+                    <div class="feature bg-gray-50 p-5 rounded-lg mb-5">
+                        <h3 class="text-primary text-lg font-semibold mb-2">Больше не нужно ходить на базар</h3>
+                        <p class="text-gray-600">У нас выгодные цены и доставка до дома</p>
+                    </div>
+                    <div class="feature bg-gray-50 p-5 rounded-lg mb-5">
+                        <h3 class="text-primary text-lg font-semibold mb-2">Быстрая доставка</h3>
+                        <p class="text-gray-600">Наш сервис удивит вас</p>
+                    </div>
+                    <div class="feature bg-gray-50 p-5 rounded-lg mb-5">
+                        <h3 class="text-primary text-lg font-semibold mb-2">Удобства для вас</h3>
+                        <p class="text-gray-600">Быстрое оформление и поднятия на колонну в случае неисправности</p>
+                    </div>
+                    <div class="feature bg-gray-50 p-5 rounded-lg">
+                        <h3 class="text-primary text-lg font-semibold mb-2">Рассрочка</h3>
+                        <p class="text-gray-600">Его продолжать на 3, 8 или 12 месяцев</p>
+                    </div>
                 </div>
-                <div class="feature">
-                    <h3>Быстрая доставка</h3>
-                    <p>Наш сервис удивит вас</p>
-                </div>
-                <div class="feature">
-                    <h3>Удобства для вас</h3>
-                    <p>Быстрое оформление и поднятия на колонну в случае неисправности</p>
-                </div>
-                <div class="feature">
-                    <h3>Рассрочка</h3>
-                    <p>Его продолжать на 3, 8 или 12 месяцев</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="widget">
-                <h3>Об Азохіу</h3>
-                <ul>
-                    <li><a href="#">О нас</a></li>
-                    <li><a href="#">Карьера в Азохіу</a></li>
-                    <li><a href="#">Лицензия в сертифікатах</a></li>
-                    <li><a href="#">Понятних Азохіу Копателя</a></li>
-                </ul>
-            </div>
-
-            <div class="widget">
-                <h3>Покупателям</h3>
-                <ul>
-                    <li><a href="#">Часто задаваемые вопросы</a></li>
-                    <li><a href="#">Статус: «В-ухі! Віколеп!»</a></li>
-                    <li><a href="#">Азохіру Plus</a></li>
-                    <li><a href="#">Договор публічного оферта «Азохіру Plus»</a></li>
-                    <li><a href="#">Оферта для рассрочки</a></li>
-                    <li><a href="#">Публичная оферта</a></li>
-                    <li><a href="#">Публичная оферта для онлайн-курсов</a></li>
-                </ul>
-            </div>
-
-            <div class="widget">
-                <h3>Для связи</h3>
-                <div class="contact-info">
-                    <p>+998 71 200 01 05</p>
-                    <p>info@asaxiy.uz</p>
-                    <p>Telegram bot</p>
-                    <p>умная Гавара ТАА, Ташкент</p>
+            <!-- Sidebar -->
+            <aside class="w-full lg:w-5/12">
+                <div class="widget bg-white rounded-xl shadow-sm p-5 mb-6">
+                    <h3 class="text-primary text-lg font-semibold mb-4 pb-2 border-b border-gray-200">Об Азохіу</h3>
+                    <ul>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">О нас</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Карьера в Азохіу</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Лицензия в сертифікатах</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Понятних Азохіу Копателя</a></li>
+                    </ul>
                 </div>
-            </div>
 
-            <div class="widget">
-                <h3>Виды оплаты</h3>
-                <div class="payment-methods">
-                    <span class="payment-method">Payme</span>
-                    <span class="payment-method">Click</span>
-                    <span class="payment-method">Uzcard</span>
-                    <span class="payment-method">Visa</span>
-                    <span class="payment-method">Наличные</span>
+                <div class="widget bg-white rounded-xl shadow-sm p-5 mb-6">
+                    <h3 class="text-primary text-lg font-semibold mb-4 pb-2 border-b border-gray-200">Покупателям</h3>
+                    <ul>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Часто задаваемые вопросы</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Статус: «В-ухі! Віколеп!»</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Азохіру Plus</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Договор публічного оферта «Азохіру Plus»</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Оферта для рассрочки</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Публичная оферта</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-primary transition-colors block py-1">Публичная оферта для онлайн-курсов</a></li>
+                    </ul>
                 </div>
-            </div>
-        </aside>
+
+                <div class="widget bg-white rounded-xl shadow-sm p-5 mb-6">
+                    <h3 class="text-primary text-lg font-semibold mb-4 pb-2 border-b border-gray-200">Для связи</h3>
+                    <div class="contact-info text-gray-600 leading-loose">
+                        <p>+998 71 200 01 05</p>
+                        <p>info@asaxiy.uz</p>
+                        <p>Telegram bot</p>
+                        <p>умная Гавара ТАА, Ташкент</p>
+                    </div>
+                </div>
+
+                <div class="widget bg-white rounded-xl shadow-sm p-5">
+                    <h3 class="text-primary text-lg font-semibold mb-4 pb-2 border-b border-gray-200">Виды оплаты</h3>
+                    <div class="payment-methods flex flex-wrap gap-2">
+                        <span class="bg-gray-100 px-3 py-2 rounded-md font-medium">Payme</span>
+                        <span class="bg-gray-100 px-3 py-2 rounded-md font-medium">Click</span>
+                        <span class="bg-gray-100 px-3 py-2 rounded-md font-medium">Uzcard</span>
+                        <span class="bg-gray-100 px-3 py-2 rounded-md font-medium">Visa</span>
+                        <span class="bg-gray-100 px-3 py-2 rounded-md font-medium">Наличные</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h4>Информация</h4>
+    <footer class="bg-gray-900 text-gray-300 mt-12 pt-10 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between gap-8 mb-10">
+                <div class="footer-column flex-1 min-w-[200px]">
+                    <h4 class="text-white text-lg font-semibold mb-5">Информация</h4>
                     <ul>
-                        <li><a href="#">Наши Время</a></li>
-                        <li><a href="#">Новости</a></li>
-                        <li><a href="#">Банк</a></li>
-                        <li><a href="#">Карта сайта</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors">Наши Время</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors">Новости</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors">Банк</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Карта сайта</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-column">
-                    <h4>Доставка и магазины</h4>
+                <div class="footer-column flex-1 min-w-[200px]">
+                    <h4 class="text-white text-lg font-semibold mb-5">Доставка и магазины</h4>
                     <ul>
-                        <li><a href="#">Наши магазины</a></li>
-                        <li><a href="#">Пункты выдачи</a></li>
-                        <li><a href="#">Доставка</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors">Наши магазины</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors">Пункты выдачи</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Доставка</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-column">
-                    <h4>Мы в соц. сетях</h4>
+                <div class="footer-column flex-1 min-w-[200px]">
+                    <h4 class="text-white text-lg font-semibold mb-5">Мы в соц. сетях</h4>
                     <ul>
-                        <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-telegram mr-2"></i> Telegram</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram mr-2"></i> Instagram</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook mr-2"></i> Facebook</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-youtube mr-2"></i> YouTube</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="copyright">
+            <div class="copyright text-center pt-6 border-t border-gray-800 text-gray-500 text-sm">
                 <p>2015 - 2025 Интернет-магазин азохіу.uz: Быстрая техника и др. Доставка товаров осуществляется во все регионы. Все права защищены.</p>
             </div>
         </div>
     </footer>
+
+    <script src="./main.js"></script>
 </body>
 </html>
